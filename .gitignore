@@ -1,0 +1,21 @@
+# Ministry workspace .gitignore
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+
+# Editor
+*.swp
+*.swo
+
+# Generated/temp
+temp/
+tmp/
+*.tmp
