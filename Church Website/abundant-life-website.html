@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Abundant Life Family Worship Center | Cedar Grove, TN</title>
+  <meta name="description" content="Abundant Life Family Worship Center is a church family in Cedar Grove, Tennessee, proclaiming the gospel of Jesus Christ and making disciples across Carroll County." />
+  <style>
+    :root {
+      --ink: #14211f;
+      --muted: #63706d;
+      --soft: #f5f1e8;
+      --paper: #fffdf8;
+      --line: rgba(20,33,31,.14);
+      --teal: #0b585d;
+      --teal-dark: #073f44;
+      --green: #95b532;
+      --green-dark: #6e8f24;
+      --sky: #78bfdd;
+      --gold: #d8a73f;
+      --shadow: 0 24px 60px rgba(10, 42, 42, .16);
+      --radius: 22px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.6;
+    }
+    body.menu-open { overflow: hidden; }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .announce {
+      background: var(--sky);
+      color: #082b33;
+      text-align: center;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-size: .82rem;
+      padding: .65rem 3.25rem .65rem 1rem;
+      position: relative;
+    }
+    .announce button {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 0;
+      background: transparent;
+      font-size: 1.15rem;
+      cursor: pointer;
+      color: #082b33;
+    }
+
+    .site-header {
+      position: absolute;
+      inset: 44px 0 auto 0;
+      z-index: 10;
+      color: white;
+      padding: 1.25rem 5vw;
+    }
+    .header-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 1rem;
+    }
+    .socials, .nav { display: flex; gap: 1rem; align-items: center; }
+    .socials a {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255,255,255,.38);
+      border-radius: 50%;
+      font-weight: 800;
+      font-size: .78rem;
+    }
+    .logo { text-align: center; text-transform: uppercase; letter-spacing: .14em; }
+    .logo-mark {
+      width: 58px;
+      height: 58px;
+      margin: 0 auto .4rem;
+      display: grid;
+      place-items: center;
+      border: 2px solid rgba(255,255,255,.85);
+      border-radius: 50%;
+      font-size: 1.55rem;
+      font-weight: 900;
+    }
+    .logo strong { display: block; font-size: .95rem; line-height: 1.1; }
+    .logo span { display: block; font-size: .62rem; opacity: .82; }
+    .nav { justify-content: flex-end; }
+    .nav a {
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .11em;
+      font-weight: 800;
+      padding: .5rem 0;
+      border-bottom: 2px solid transparent;
+    }
+    .nav a:hover, .nav a:focus { border-bottom-color: var(--green); }
+    .menu-toggle { display: none; }
+
+    .hero {
+      min-height: 86vh;
+      display: grid;
+      place-items: center;
+      padding: 12rem 5vw 8rem;
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(5,16,18,.72), rgba(5,16,18,.55)),
+        radial-gradient(circle at 20% 35%, rgba(120,191,221,.45), transparent 30%),
+        radial-gradient(circle at 78% 24%, rgba(149,181,50,.33), transparent 28%),
+        linear-gradient(135deg, #071618, #0c3f45 45%, #12231f);
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: .16;
+      background-image:
+        linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: linear-gradient(to bottom, black 10%, transparent 92%);
+    }
+    .hero-content { position: relative; z-index: 1; max-width: 940px; }
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: .22em;
+      font-size: .78rem;
+      font-weight: 900;
+      color: #dcefb0;
+      margin-bottom: 1rem;
+    }
+    h1, h2, h3 { line-height: 1.05; margin: 0; }
+    h1 {
+      font-size: clamp(3.5rem, 9vw, 8.8rem);
+      text-transform: uppercase;
+      letter-spacing: -.06em;
+      font-weight: 950;
+    }
+    .hero p {
+      font-size: clamp(1.2rem, 2vw, 1.75rem);
+      max-width: 760px;
+      margin: 1.4rem auto 2rem;
+      color: rgba(255,255,255,.9);
+    }
+    .button-row { display: flex; gap: .85rem; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: .85rem 1.15rem;
+      border: 2px solid transparent;
+      text-transform: uppercase;
+      letter-spacing: .09em;
+      font-weight: 900;
+      font-size: .78rem;
+      cursor: pointer;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-light { background: white; color: var(--ink); }
+    .btn-green { background: var(--green); color: #142008; }
+    .btn-outline { border-color: currentColor; color: currentColor; }
+    .btn-dark { background: var(--ink); color: white; }
+
+    section { padding: 6rem 5vw; }
+    .wrap { max-width: var(--max); margin: 0 auto; }
+    .section-head { max-width: 760px; margin-bottom: 2.25rem; }
+    .center { text-align: center; margin-left: auto; margin-right: auto; }
+    .section-kicker {
+      color: var(--green-dark);
+      font-size: .78rem;
+      font-weight: 950;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      margin-bottom: .85rem;
+    }
+    h2 { font-size: clamp(2.15rem, 4.7vw, 4.7rem); letter-spacing: -.045em; }
+    h3 { font-size: clamp(1.35rem, 2.5vw, 2rem); letter-spacing: -.02em; }
+    .lead { font-size: 1.18rem; color: var(--muted); margin: 1rem 0 0; }
+
+    .visit {
+      background: var(--teal);
+      color: white;
+      text-align: center;
+    }
+    .visit .lead { color: rgba(255,255,255,.82); }
+    .visit-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 2.4rem;
+      text-align: left;
+    }
+    .visit-card {
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.08);
+      padding: 1.45rem;
+      min-height: 164px;
+    }
+    .visit-card span { color: #dcefb0; font-weight: 900; text-transform: uppercase; font-size: .75rem; letter-spacing: .14em; }
+    .visit-card p { margin-bottom: 0; color: rgba(255,255,255,.86); }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 5vw, 5rem);
+      align-items: center;
+    }
+    .statement {
+      font-size: clamp(1.65rem, 3vw, 3.15rem);
+      line-height: 1.12;
+      letter-spacing: -.04em;
+      font-weight: 850;
+    }
+    .pastor-card {
+      background: white;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      padding: 2rem;
+      border-radius: var(--radius);
+    }
+    .photo-block {
+      min-height: 360px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(8,63,68,.05), rgba(8,63,68,.28)),
+        url('church-building-bulletin.png') center / cover;
+      position: relative;
+    }
+    .photo-block::after {
+      content: "Abundant Life Family Worship Center";
+      position: absolute;
+      left: 1.25rem;
+      bottom: 1.25rem;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-weight: 900;
+      font-size: .72rem;
+      text-shadow: 0 2px 14px rgba(0,0,0,.65);
+    }
+
+    .teal-band {
+      background: linear-gradient(100deg, var(--teal-dark), var(--teal) 54%, var(--green));
+      color: white;
+      padding: 4.5rem 5vw;
+      text-align: center;
+    }
+    .teal-band h2 { text-transform: uppercase; }
+
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; }
+    .card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 1.65rem;
+      box-shadow: 0 16px 35px rgba(10,42,42,.08);
+      min-height: 228px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card .num {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--soft);
+      color: var(--teal);
+      font-weight: 950;
+      margin-bottom: 1rem;
+    }
+    .card p { color: var(--muted); }
+    .arrow { font-size: 1.7rem; color: var(--green-dark); }
+
+    .dark-section {
+      background: var(--teal-dark);
+      color: white;
+    }
+    .dark-section .lead, .dark-section p { color: rgba(255,255,255,.78); }
+    .pathway {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 2.25rem;
+    }
+    .path-step {
+      border: 1px solid rgba(255,255,255,.14);
+      padding: 1.3rem;
+      background: rgba(255,255,255,.06);
+    }
+    .path-step strong { color: #dcefb0; display: block; margin-bottom: .55rem; text-transform: uppercase; letter-spacing: .08em; }
+
+    .beliefs {
+      background: var(--soft);
+    }
+    .belief-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    .belief {
+      background: var(--paper);
+      padding: 1.3rem;
+      border-left: 6px solid var(--green);
+      border-radius: 0 18px 18px 0;
+    }
+    .belief p { margin-bottom: 0; color: var(--muted); }
+
+    .message-card {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 1.25rem;
+      align-items: stretch;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .message-art {
+      min-height: 320px;
+      background:
+        linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.35)),
+        radial-gradient(circle at 22% 42%, rgba(149,181,50,.58), transparent 25%),
+        radial-gradient(circle at 74% 35%, rgba(120,191,221,.52), transparent 22%),
+        linear-gradient(135deg, #091719, #184f55);
+      display: grid;
+      place-items: center;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+    }
+    .message-art strong { font-size: clamp(2rem, 5vw, 4rem); line-height: .95; text-transform: uppercase; letter-spacing: -.04em; }
+    .message-copy { padding: 2rem; }
+
+    .contact {
+      background: #071819;
+      color: white;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 1.2rem;
+      align-items: stretch;
+    }
+    .contact-panel, .form-panel {
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius);
+      padding: 1.7rem;
+    }
+    .contact-panel p { color: rgba(255,255,255,.78); }
+    label { display: block; font-weight: 800; margin-bottom: .35rem; }
+    input, textarea, select {
+      width: 100%;
+      border: 1px solid rgba(255,255,255,.24);
+      background: rgba(255,255,255,.1);
+      color: white;
+      padding: .85rem;
+      font: inherit;
+      margin-bottom: .9rem;
+      border-radius: 10px;
+    }
+    input::placeholder, textarea::placeholder { color: rgba(255,255,255,.52); }
+    textarea { min-height: 120px; resize: vertical; }
+
+    footer {
+      background: white;
+      padding: 4rem 5vw 2rem;
+      border-top: 1px solid var(--line);
+    }
+    .footer-grid {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.3fr repeat(3, 1fr);
+      gap: 2rem;
+    }
+    footer h4 {
+      text-transform: uppercase;
+      letter-spacing: .13em;
+      color: var(--green-dark);
+      margin: 0 0 .9rem;
+      font-size: .8rem;
+    }
+    footer a, footer p { color: var(--muted); display: block; margin: .35rem 0; }
+    .copyright { max-width: var(--max); margin: 2.5rem auto 0; color: var(--muted); font-size: .9rem; }
+
+    .mobile-cta {
+      display: none;
+      position: fixed;
+      left: .75rem;
+      right: .75rem;
+      bottom: .75rem;
+      z-index: 30;
+      box-shadow: 0 14px 40px rgba(0,0,0,.22);
+    }
+
+    @media (max-width: 900px) {
+      .site-header { inset: 38px 0 auto 0; }
+      .header-inner { grid-template-columns: auto 1fr auto; }
+      .socials { display: none; }
+      .logo { text-align: left; display: flex; align-items: center; gap: .75rem; }
+      .logo-mark { margin: 0; width: 46px; height: 46px; }
+      .menu-toggle {
+        display: inline-flex;
+        background: rgba(255,255,255,.14);
+        border: 1px solid rgba(255,255,255,.34);
+        color: white;
+        padding: .7rem .85rem;
+        text-transform: uppercase;
+        letter-spacing: .1em;
+        font-weight: 900;
+      }
+      .nav {
+        position: fixed;
+        inset: 0;
+        background: rgba(7,24,25,.97);
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        gap: 1.4rem;
+        font-size: 1.2rem;
+      }
+      body.menu-open .nav { display: flex; }
+      .split, .message-card, .contact-grid { grid-template-columns: 1fr; }
+      .visit-grid, .cards, .pathway, .belief-grid, .footer-grid { grid-template-columns: 1fr; }
+      section { padding: 4.25rem 5vw; }
+      .mobile-cta { display: inline-flex; }
+      footer { padding-bottom: 5.5rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="announce" id="announce">
+    Plan your visit this Sunday, there is a place for your family at Abundant Life.
+    <button aria-label="Dismiss announcement" onclick="document.getElementById('announce').style.display='none'">×</button>
+  </div>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="socials" aria-label="Social links">
+        <a href="#" aria-label="Facebook">f</a>
+        <a href="#" aria-label="Instagram">ig</a>
+        <a href="mailto:AbunLifeFWC@charter.net" aria-label="Email">@</a>
+      </div>
+      <a class="logo" href="#top" aria-label="Abundant Life Family Worship Center home">
+        <span class="logo-mark">AL</span>
+        <span><strong>Abundant Life</strong><span>Family Worship Center</span></span>
+      </a>
+      <button class="menu-toggle" onclick="document.body.classList.toggle('menu-open')">Menu</button>
+      <nav class="nav" aria-label="Main navigation" onclick="document.body.classList.remove('menu-open')">
+        <a href="#visit">Visit</a>
+        <a href="#about">About</a>
+        <a href="#families">Families</a>
+        <a href="#next">Next Steps</a>
+        <a href="#beliefs">Beliefs</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-content">
+        <div class="eyebrow">Cedar Grove, Tennessee</div>
+        <h1 id="hero-title">You’re Welcome Here</h1>
+        <p>No matter where you have been or what your story looks like, we would be grateful to meet you. We are a church family learning to walk together in truth, love, repentance, service, and mission.</p>
+        <div class="button-row">
+          <a class="btn btn-light" href="#visit">Plan Your Visit</a>
+          <a class="btn btn-outline" href="#message">Watch a Message</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="visit" id="visit" aria-labelledby="visit-title">
+      <div class="wrap">
+        <div class="section-head center">
+          <div class="section-kicker" style="color:#dcefb0">Plan Your Visit</div>
+          <h2 id="visit-title">We’d love for you to join us this weekend.</h2>
+          <p class="lead">Come as you are. Bring your Bible if you have one. If you are new, we will help you find your way and answer your questions.</p>
+        </div>
+        <div class="button-row"><a class="btn btn-light" href="#contact">Get Directions</a><a class="btn btn-outline" href="#families">For Families</a></div>
+        <div class="visit-grid">
+          <article class="visit-card"><span>Location</span><h3>4375 Highway 70</h3><p>Cedar Grove, TN 38321<br />P.O. Box 73</p></article>
+          <article class="visit-card"><span>Sunday</span><h3>Worship Schedule</h3><p>Sunday School, 10:00 a.m.<br />Morning Worship, 11:00 a.m.<br />Children’s Church, 11:30 a.m.</p></article>
+          <article class="visit-card"><span>Weekly</span><h3>Midweek Gatherings</h3><p>Celebrate Recovery, Tuesday at 6:00 p.m.<br />Wednesday Night Services, 6:30 p.m.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" aria-labelledby="about-title">
+      <div class="wrap split">
+        <div>
+          <div class="section-kicker">Who We Are</div>
+          <h2 id="about-title">A church family carrying the gospel to real people.</h2>
+          <p class="lead">Abundant Life Family Worship Center exists to glorify God by proclaiming the gospel of Jesus Christ, gathering and shepherding a regenerate church, and making disciples across Carroll County through the ordinary means of grace.</p>
+          <p>We are not a perfect church. We are a family of sinners saved by grace, learning to walk together in repentance, truth, love, worship, service, and mission.</p>
+        </div>
+        <aside class="pastor-card">
+          <div class="photo-block" aria-hidden="true"></div>
+          <h3 style="margin-top:1.2rem">Pastor Jason Tilley</h3>
+          <p>Jason serves as senior pastor after previously serving as youth pastor and associate pastor. His burden is faithful exposition, biblical fidelity, Christ-centered preaching, and practical pastoral care.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="teal-band" aria-labelledby="mission-title">
+      <div class="wrap">
+        <h2 id="mission-title">Know Christ. Join the Church. Grow in Grace. Serve and Send.</h2>
+      </div>
+    </section>
+
+    <section id="families" aria-labelledby="families-title">
+      <div class="wrap">
+        <div class="section-head center">
+          <div class="section-kicker">For Families</div>
+          <h2 id="families-title">Grounded in Scripture, connected to the church family.</h2>
+          <p class="lead">We believe parents are the primary disciplers of their children, and the church is a reinforcing family.</p>
+        </div>
+        <div class="cards">
+          <article class="card"><div><div class="num">01</div><h3>Children</h3><p>A safe and joyful environment where children hear the gospel, learn Scripture, and are cared for by accountable volunteers.</p></div><span class="arrow">→</span></article>
+          <article class="card"><div><div class="num">02</div><h3>Students</h3><p>Youth discipleship that supports parents, teaches Christian living, encourages holiness, and connects students with mature believers.</p></div><span class="arrow">→</span></article>
+          <article class="card"><div><div class="num">03</div><h3>Member Care</h3><p>Prayer, hospitality, meals, follow-up, and practical help so no one has to walk through hardship alone.</p></div><span class="arrow">→</span></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="dark-section" id="next" aria-labelledby="next-title">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-kicker" style="color:#dcefb0">Take Your Next Step</div>
+          <h2 id="next-title">The Christian life is not meant to be lived alone.</h2>
+          <p class="lead">We want to help you take a faithful next step, whether that means understanding the gospel, baptism, membership, serving, or receiving care.</p>
+        </div>
+        <div class="pathway">
+          <article class="path-step"><strong>Follow Jesus</strong><p>Hear the good news that God saves sinners by grace alone through faith alone in Christ alone.</p></article>
+          <article class="path-step"><strong>Baptism</strong><p>Publicly declare your faith in Christ through believer’s baptism by immersion.</p></article>
+          <article class="path-step"><strong>Membership</strong><p>Attend Abundant Life 101 and learn what it means to walk together as a church family.</p></article>
+          <article class="path-step"><strong>Serve</strong><p>Use your gifts in hospitality, prayer care, youth and children, recovery, mercy, facilities, or discipleship.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="beliefs" id="beliefs" aria-labelledby="beliefs-title">
+      <div class="wrap split">
+        <div>
+          <div class="section-kicker">What We Believe</div>
+          <h2 id="beliefs-title">Scripture is our final authority.</h2>
+          <p class="lead">Our doctrine is centered on the gospel: Christ’s life, death, resurrection, and reign. We want to be clear where Scripture is clear, careful where faithful Christians have differed, and united around the mission Christ has given His church.</p>
+          <a class="btn btn-green" href="#contact">Ask a Question</a>
+        </div>
+        <div class="belief-grid">
+          <article class="belief"><h3>Scripture</h3><p>The Bible is inspired by God, true in all that it teaches, and sufficient for faith and godliness.</p></article>
+          <article class="belief"><h3>Jesus Christ</h3><p>Jesus is fully God and fully man. He lived without sin, died for sinners, rose bodily, and reigns as Lord.</p></article>
+          <article class="belief"><h3>Salvation</h3><p>Salvation is by grace alone through faith alone in Christ alone. The gospel calls every person to repent and believe.</p></article>
+          <article class="belief"><h3>The Church</h3><p>The local church is a covenant community of baptized believers under Christ’s Word.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="message" aria-labelledby="message-title">
+      <div class="wrap">
+        <div class="message-card">
+          <div class="message-art"><strong>Recent Message</strong></div>
+          <div class="message-copy">
+            <div class="section-kicker">Watch</div>
+            <h2 id="message-title">Faithful exposition for real life.</h2>
+            <p class="lead">Recent messages can be embedded here from YouTube, Facebook, or your church media source.</p>
+            <p>Current sermon emphasis: the Ephesians series, with a pastoral focus on unity, maturity, and life together as the body of Christ.</p>
+            <a class="btn btn-dark" href="#">Add Media Link</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="membership-title">
+      <div class="wrap split">
+        <div>
+          <div class="section-kicker">Abundant Life 101</div>
+          <h2 id="membership-title">Membership gives clarity to love.</h2>
+          <p class="lead">Membership is not a consumer relationship. It is a covenant commitment to follow Christ together as a local church family.</p>
+        </div>
+        <div class="cards" style="grid-template-columns:1fr; gap:.8rem">
+          <article class="card"><h3>1. Attend Abundant Life 101</h3><p>Learn the gospel we preach, the doctrine we teach, the mission we share, and the commitment involved in membership.</p></article>
+          <article class="card"><h3>2. Membership Conversation</h3><p>Share your testimony, baptism history, questions, and areas where you desire shepherding or service.</p></article>
+          <article class="card"><h3>3. Covenant Commitment</h3><p>Walk together in worship, holiness, service, reconciliation, giving, and mission.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <div class="wrap contact-grid">
+        <div class="contact-panel">
+          <div class="section-kicker" style="color:#dcefb0">Contact</div>
+          <h2 id="contact-title">We would be glad to hear from you.</h2>
+          <p><strong>Abundant Life Family Worship Center</strong><br />P.O. Box 73<br />4375 Highway 70<br />Cedar Grove, TN 38321</p>
+          <p><strong>Phone:</strong> (731) 987-2949</p>
+          <p><strong>Email:</strong> AbunLifeFWC@charter.net</p>
+          <p><strong>Weekly schedule:</strong><br />Sunday School, 10:00 a.m.<br />Sunday Morning Worship, 11:00 a.m.<br />Children’s Church, 11:30 a.m.<br />Celebrate Recovery, Tuesday at 6:00 p.m.<br />Wednesday Night Services, 6:30 p.m.</p>
+          <div class="button-row" style="justify-content:flex-start"><a class="btn btn-green" href="tel:17319872949">Call the Church</a><a class="btn btn-outline" href="https://www.google.com/maps/search/?api=1&query=4375+Highway+70+Cedar+Grove+TN+38321">Directions</a></div>
+        </div>
+        <form class="form-panel" onsubmit="event.preventDefault(); alert('This is a static website draft. Connect this form before publishing.');">
+          <label for="name">Name</label>
+          <input id="name" placeholder="Your name" />
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="you@example.com" />
+          <label for="topic">I’m interested in</label>
+          <select id="topic"><option>Planning a visit</option><option>Prayer or pastoral care</option><option>Baptism</option><option>Membership</option><option>Celebrate Recovery</option><option>Serving</option></select>
+          <label for="message-field">Message</label>
+          <textarea id="message-field" placeholder="How can we help?"></textarea>
+          <button class="btn btn-green" type="submit">Send Message</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="logo" style="color:var(--ink); text-align:left; display:flex; gap:.75rem; align-items:center">
+          <span class="logo-mark" style="border-color:var(--teal); color:var(--teal); margin:0">AL</span>
+          <span><strong>Abundant Life</strong><span>Family Worship Center</span></span>
+        </div>
+        <p>A church family in Cedar Grove, Tennessee, proclaiming Christ and making disciples across Carroll County.</p>
+      </div>
+      <div><h4>Visit</h4><a href="#visit">Plan Your Visit</a><a href="#families">For Families</a><a href="#contact">Directions</a></div>
+      <div><h4>Next Steps</h4><a href="#next">Follow Jesus</a><a href="#next">Baptism</a><a href="#membership-title">Membership</a><a href="#next">Serve</a></div>
+      <div><h4>About</h4><a href="#about">Our Church</a><a href="#beliefs">Beliefs</a><a href="#message">Messages</a><a href="#contact">Contact</a></div>
+    </div>
+    <p class="copyright">© <span id="year"></span> Abundant Life Family Worship Center. Draft website concept for review.</p>
+  </footer>
+
+  <a class="btn btn-green mobile-cta" href="#visit">Plan Your Visit</a>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
