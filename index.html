@@ -32,24 +32,6 @@
     </noscript>
     <!-- The root element for your Expo app. -->
     <div id="root"></div>
-  <script>
-    window.addEventListener('error', function (e) {
-      var root = document.getElementById('root');
-      if (root && !root.innerHTML) {
-        root.innerHTML = '<pre style="white-space:pre-wrap;padding:16px;color:#b00020;font-family:monospace">ALFWC app error: ' +
-          String(e.message || e.error || 'Unknown error') + '
-' +
-          String((e.error && e.error.stack) || '') + '</pre>';
-      }
-    });
-    window.addEventListener('unhandledrejection', function (e) {
-      var root = document.getElementById('root');
-      if (root && !root.innerHTML) {
-        root.innerHTML = '<pre style="white-space:pre-wrap;padding:16px;color:#b00020;font-family:monospace">ALFWC app promise error: ' +
-          String(e.reason && (e.reason.stack || e.reason.message) || e.reason || 'Unknown rejection') + '</pre>';
-      }
-    });
-  </script>
-  <script src="/ministry-workspace/_expo/static/js/web/AppEntry-304e9cd8665fb2c9224605e90ad72acd.js?v=c35d3e4" defer></script>
+  <script src="/ministry-workspace/_expo/static/js/web/AppEntry-304e9cd8665fb2c9224605e90ad72acd.js?v=10c3257" defer></script>
 </body>
 </html>
