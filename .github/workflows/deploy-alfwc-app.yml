@@ -21,11 +21,13 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout gh-pages
         uses: actions/checkout@v4
         with:
           ref: gh-pages
           path: gh-pages-root
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Checkout source
         uses: actions/checkout@v4
@@ -63,9 +65,14 @@ jobs:
           if [ -d gh-pages-root/alfwc-admin ]; then echo "Keeping existing alfwc-admin deploy"; fi
 
       - name: Publish gh-pages branch
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          branch: gh-pages
-          folder: gh-pages-root
-          clean: false
-          token: ${{ secrets.GITHUB_TOKEN }}
+        working-directory: gh-pages-root
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes to deploy"
+          else
+            git commit -m "Deploy ALFWC app from ${GITHUB_SHA}"
+            git push origin HEAD:gh-pages
+          fi
