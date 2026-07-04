@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Card, Choice, Field, PrimaryButton, ScreenHeader } from '../components/ui';
 import { submitPrayerRequest } from '../lib/api';
+import { FORM_LIMITS } from '../lib/formValidation';
 import { colors, spacing, typography } from '../theme/colors';
 
 export default function PrayerRequestScreen() {
@@ -65,13 +66,14 @@ export default function PrayerRequestScreen() {
       </Card>
 
       <Card>
-        <Field label="Your name (optional)" value={name} onChangeText={setName} placeholder="Your name" />
+        <Field label="Your name (optional)" value={name} onChangeText={setName} placeholder="Your name" maxLength={FORM_LIMITS.name} />
         <Field
           label="Email or phone (optional)"
           value={contact}
           onChangeText={setContact}
           placeholder="How we can reach you"
           keyboardType="email-address"
+          maxLength={FORM_LIMITS.contact}
         />
         <Field
           label="Prayer request"
@@ -80,6 +82,7 @@ export default function PrayerRequestScreen() {
           placeholder="Share what you'd like prayer about..."
           multiline
           required
+          maxLength={FORM_LIMITS.prayerRequest}
         />
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
 

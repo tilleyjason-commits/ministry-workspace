@@ -12,6 +12,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
+import { safeExternalUrl } from '../lib/urlSafety';
 import { colors, fonts, radius, shadows, spacing, typography } from '../theme/colors';
 
 export const illustrations = {
@@ -29,13 +30,14 @@ export const illustrations = {
 export type IllustrationName = keyof typeof illustrations;
 
 export function openExternalUrl(url?: string, warning = 'This link has not been configured yet.') {
-  if (!url) {
+  const safeUrl = safeExternalUrl(url);
+  if (!safeUrl) {
     console.warn(warning);
     return;
   }
 
-  Linking.openURL(url).catch((error) => {
-    console.warn('Could not open URL', url, error);
+  Linking.openURL(safeUrl).catch((error) => {
+    console.warn('Could not open URL', safeUrl, error);
   });
 }
 

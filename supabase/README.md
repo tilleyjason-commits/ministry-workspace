@@ -14,6 +14,7 @@ In the SQL editor, run:
 2. Run `supabase/migrations/20260704_alfwc_mobile_tables.sql` from this directory.
 3. Run `supabase/migrations/20260705_security_phase1.sql` (blocks role escalation + secures device tables).
 4. Run `supabase/migrations/20260706_security_phase2.sql` (draft-only inserts, staff-only reads, prayer enum).
+5. Run `supabase/migrations/20260707_security_phase3.sql` (field limits, form rate limiting).
 
 ## Staff access
 

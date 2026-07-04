@@ -5,6 +5,7 @@ import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-nat
 import { Card, Choice, Field, PrimaryButton, ScreenHeader } from '../components/ui';
 import { interests } from '../data/seed';
 import { submitConnectCard } from '../lib/api';
+import { FORM_LIMITS } from '../lib/formValidation';
 import { colors, spacing, typography } from '../theme/colors';
 
 export default function ConnectCardScreen() {
@@ -62,7 +63,7 @@ export default function ConnectCardScreen() {
       <ScreenHeader title="Connect card" subtitle="Take the next step. We'd love to know how we can serve you." />
 
       <Card>
-        <Field label="Your name" value={name} onChangeText={setName} placeholder="Your full name" required />
+        <Field label="Your name" value={name} onChangeText={setName} placeholder="Your full name" required maxLength={FORM_LIMITS.name} />
         <Field
           label="Email or phone"
           value={contact}
@@ -70,6 +71,7 @@ export default function ConnectCardScreen() {
           placeholder="How we can reach you"
           keyboardType="email-address"
           required
+          maxLength={FORM_LIMITS.contact}
         />
         <Text style={styles.interestLabel}>I'm interested in…</Text>
         {interests.slice(0, 5).map((interest) => (
@@ -86,6 +88,7 @@ export default function ConnectCardScreen() {
           onChangeText={setMessage}
           placeholder="Anything else you'd like us to know?"
           multiline
+          maxLength={FORM_LIMITS.connectMessage}
         />
         {error ? <Text style={styles.errorText}>{error}</Text> : null}
         <PrimaryButton

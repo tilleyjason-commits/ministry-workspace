@@ -1,5 +1,13 @@
 import * as seed from '../data/seed';
+import {
+  FORM_LIMITS,
+  normalizeInterests,
+  trimToMax,
+  validateConnectCardInput,
+  validatePrayerRequestInput,
+} from './formValidation';
 import type { NotificationPreferences, OnboardingState } from './storage';
+import { safeExternalUrl } from './urlSafety';
 import { createSupabaseClient, isBackendConfigured } from './supabase';
 
 export type AppConfig = typeof seed.appConfig;
@@ -91,13 +99,15 @@ function mapSermon(row: ContentRow): Sermon | null {
     return null;
   }
 
-  const watchUrl =
+  const rawWatchUrl =
     asString(content.watchUrl) ||
     (content.youtubeVideoId
       ? `https://www.youtube.com/watch?v=${asString(content.youtubeVideoId)}`
       : '');
+  const watchUrl = safeExternalUrl(rawWatchUrl) ?? '';
+  const notesUrl = safeExternalUrl(asString(content.notesUrl)) ?? undefined;
 
-  if (!watchUrl && !content.notesUrl) {
+  if (!watchUrl && !notesUrl) {
     return null;
   }
 
@@ -117,7 +127,7 @@ function mapSermon(row: ContentRow): Sermon | null {
     thumbnailUrl: asString(content.thumbnailUrl) || asString(row.image_public_url) || undefined,
     youtubeVideoId: asString(content.youtubeVideoId) || undefined,
     watchUrl,
-    notesUrl: asString(content.notesUrl) || undefined,
+    notesUrl,
     discussionQuestions: parseDiscussionQuestions(content.discussionQuestions),
     prayerPrompt: asString(content.prayerPrompt) || undefined,
     isLive: asBoolean(content.isLive),
@@ -153,7 +163,7 @@ function mapEvent(row: ContentRow): EventItem | null {
     address: asString(content.address) || undefined,
     category: asString(content.category) || undefined,
     imageUrl: asString(content.imageUrl) || asString(row.image_public_url) || undefined,
-    registrationUrl: asString(content.registrationUrl) || undefined,
+    registrationUrl: safeExternalUrl(asString(content.registrationUrl)) || undefined,
     contactName: asString(content.contactName) || undefined,
     contactEmail: asString(content.contactEmail) || undefined,
     visibility: content.visibility === 'members' ? 'members' : 'public',
@@ -304,6 +314,23 @@ export async function fetchMinistryHighlight(): Promise<MinistryHighlight> {
   };
 }
 
+function mapSubmissionError(error: { code?: string; message?: string } | null): string {
+  if (!error) return 'Something went wrong. Please try again.';
+
+  const message = error.message?.toLowerCase() ?? '';
+  if (message.includes('rate limit')) {
+    return 'Too many submissions. Please wait an hour and try again.';
+  }
+  if (error.code === '23514' || message.includes('violates check constraint')) {
+    return 'Please check your entries and try again.';
+  }
+  if (error.code === '42501') {
+    return 'This submission could not be accepted right now.';
+  }
+
+  return 'Something went wrong. Please try again.';
+}
+
 export async function submitPrayerRequest(input: {
   name?: string;
   contact?: string;
@@ -322,15 +349,20 @@ export async function submitPrayerRequest(input: {
     return { ok: false, message: 'Please choose a sharing preference.' };
   }
 
+  const validationError = validatePrayerRequestInput(input);
+  if (validationError) {
+    return { ok: false, message: validationError };
+  }
+
   const { error } = await createSupabaseClient().from('prayer_requests').insert({
-    name: input.name?.trim() || null,
-    contact: input.contact?.trim() || null,
-    request: input.request.trim(),
+    name: trimToMax(input.name ?? '', FORM_LIMITS.name) || null,
+    contact: trimToMax(input.contact ?? '', FORM_LIMITS.contact) || null,
+    request: trimToMax(input.request, FORM_LIMITS.prayerRequest),
     visibility,
   });
 
   return error
-    ? { ok: false, message: error.message }
+    ? { ok: false, message: mapSubmissionError(error) }
     : { ok: true, message: 'Prayer request submitted.' };
 }
 
@@ -344,15 +376,20 @@ export async function submitConnectCard(input: {
     return { ok: false, message: 'Supabase is not configured yet.' };
   }
 
+  const validationError = validateConnectCardInput(input);
+  if (validationError) {
+    return { ok: false, message: validationError };
+  }
+
   const { error } = await createSupabaseClient().from('connect_cards').insert({
-    name: input.name.trim(),
-    contact: input.contact.trim(),
-    message: input.message?.trim() || null,
-    interests: input.interests,
+    name: trimToMax(input.name, FORM_LIMITS.name),
+    contact: trimToMax(input.contact, FORM_LIMITS.contact),
+    message: trimToMax(input.message ?? '', FORM_LIMITS.connectMessage) || null,
+    interests: normalizeInterests(input.interests),
   });
 
   return error
-    ? { ok: false, message: error.message }
+    ? { ok: false, message: mapSubmissionError(error) }
     : { ok: true, message: 'Connect card submitted.' };
 }
 
