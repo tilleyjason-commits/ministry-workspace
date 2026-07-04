@@ -124,6 +124,19 @@ function mapSermon(row: ContentRow): Sermon | null {
   };
 }
 
+const PRAYER_VISIBILITY_OPTIONS = [
+  'elders_only',
+  'prayer_team',
+  'public_wall',
+  'contact_me',
+] as const;
+
+type PrayerVisibility = (typeof PRAYER_VISIBILITY_OPTIONS)[number];
+
+function isPublicEvent(event: EventItem): boolean {
+  return event.visibility !== 'members';
+}
+
 function mapEvent(row: ContentRow): EventItem | null {
   const content = asObject(row.content);
   if (!content) {
@@ -246,7 +259,10 @@ export async function fetchEvents(): Promise<EventItem[]> {
     return seed.events;
   }
 
-  const mapped = (data as ContentRow[]).map(mapEvent).filter(Boolean) as EventItem[];
+  const mapped = (data as ContentRow[])
+    .map(mapEvent)
+    .filter((event): event is EventItem => Boolean(event))
+    .filter(isPublicEvent);
   if (!mapped.length) {
     return seed.events;
   }
@@ -298,11 +314,19 @@ export async function submitPrayerRequest(input: {
     return { ok: false, message: 'Supabase is not configured yet.' };
   }
 
+  const visibility = PRAYER_VISIBILITY_OPTIONS.includes(input.visibility as PrayerVisibility)
+    ? (input.visibility as PrayerVisibility)
+    : null;
+
+  if (!visibility) {
+    return { ok: false, message: 'Please choose a sharing preference.' };
+  }
+
   const { error } = await createSupabaseClient().from('prayer_requests').insert({
     name: input.name?.trim() || null,
     contact: input.contact?.trim() || null,
     request: input.request.trim(),
-    visibility: input.visibility,
+    visibility,
   });
 
   return error

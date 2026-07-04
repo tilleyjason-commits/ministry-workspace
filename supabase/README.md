@@ -13,6 +13,13 @@ In the SQL editor, run:
 1. Copy and run `alfwc-admin/supabase/migrations/20260620_alfwc_admin_schema.sql` (or the same file from this repo once synced).
 2. Run `supabase/migrations/20260704_alfwc_mobile_tables.sql` from this directory.
 3. Run `supabase/migrations/20260705_security_phase1.sql` (blocks role escalation + secures device tables).
+4. Run `supabase/migrations/20260706_security_phase2.sql` (draft-only inserts, staff-only reads, prayer enum).
+
+## Staff access
+
+- Disable public signup in Supabase Auth.
+- First admin: sign in once, then run `alfwc-admin/supabase/seed-initial-admin.sql`.
+- Additional staff: invite from Supabase with user metadata `{"alfwc_staff": "true"}` (starts as editor).
 
 ## 3. Configure environment variables
 
