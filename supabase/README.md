@@ -15,6 +15,7 @@ In the SQL editor, run:
 3. Run `supabase/migrations/20260705_security_phase1.sql` (blocks role escalation + secures device tables).
 4. Run `supabase/migrations/20260706_security_phase2.sql` (draft-only inserts, staff-only reads, prayer enum).
 5. Run `supabase/migrations/20260707_security_phase3.sql` (field limits, form rate limiting).
+6. Run `supabase/migrations/20260708_security_phase3_fix_rate_limit.sql` (hotfix if Phase 3 already ran).
 
 ## Staff access
 

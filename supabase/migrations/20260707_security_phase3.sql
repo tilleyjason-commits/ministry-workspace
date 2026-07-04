@@ -74,10 +74,10 @@ security definer
 set search_path = public
 as $$
 declare
-  client_ip text := public.request_client_ip();
+  request_ip text := public.request_client_ip();
   recent_count integer;
 begin
-  if client_ip = 'unknown' then
+  if request_ip = 'unknown' then
     return;
   end if;
 
@@ -85,7 +85,7 @@ begin
   into recent_count
   from public.form_rate_limit_log
   where form_type = target_form_type
-    and client_ip = enforce_form_rate_limit.client_ip
+    and form_rate_limit_log.client_ip = request_ip
     and created_at > now() - interval '1 hour';
 
   if recent_count >= max_per_hour then
@@ -94,7 +94,7 @@ begin
   end if;
 
   insert into public.form_rate_limit_log (form_type, client_ip)
-  values (target_form_type, client_ip);
+  values (target_form_type, request_ip);
 end;
 $$;
 
