@@ -19,3 +19,15 @@ venv/
 temp/
 tmp/
 *.tmp
+
+# Node / Expo
+node_modules/
+.expo/
+dist/
+web-build/
+.env
+.env.local
+.env.*.local
+
+# OS
+*.log

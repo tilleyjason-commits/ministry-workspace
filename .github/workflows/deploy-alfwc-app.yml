@@ -1,0 +1,76 @@
+name: Deploy ALFWC app to GitHub Pages
+
+on:
+  push:
+    branches: [master, main]
+    paths:
+      - 'apps/alfwc-mobile/**'
+      - 'packages/content-schema/**'
+      - 'supabase/**'
+      - '.github/workflows/deploy-alfwc-app.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: alfwc-app-pages
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: gh-pages-root
+
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          path: source
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: source/apps/alfwc-mobile/package-lock.json
+
+      - name: Install dependencies
+        working-directory: source/apps/alfwc-mobile
+        run: npm ci
+
+      - name: Type check
+        working-directory: source/apps/alfwc-mobile
+        run: npm run typecheck
+
+      - name: Build web app
+        working-directory: source/apps/alfwc-mobile
+        env:
+          EXPO_PUBLIC_SUPABASE_URL: ${{ secrets.EXPO_PUBLIC_SUPABASE_URL }}
+          EXPO_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.EXPO_PUBLIC_SUPABASE_ANON_KEY }}
+          EXPO_PUBLIC_WEB_BASE_PATH: /ministry-workspace/
+        run: npm run build:web
+
+      - name: Assemble gh-pages site
+        run: |
+          rm -rf gh-pages-root/_expo gh-pages-root/assets gh-pages-root/index.html gh-pages-root/favicon.ico gh-pages-root/metadata.json
+          cp -r source/apps/alfwc-mobile/dist/* gh-pages-root/
+          touch gh-pages-root/.nojekyll
+          if [ -d gh-pages-root/alfwc-admin ]; then echo "Keeping existing alfwc-admin deploy"; fi
+
+      - name: Publish gh-pages branch
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: gh-pages-root
+          clean: false
+          token: ${{ secrets.GITHUB_TOKEN }}
