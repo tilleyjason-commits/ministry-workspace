@@ -12,6 +12,7 @@ In the SQL editor, run:
 
 1. Copy and run `alfwc-admin/supabase/migrations/20260620_alfwc_admin_schema.sql` (or the same file from this repo once synced).
 2. Run `supabase/migrations/20260704_alfwc_mobile_tables.sql` from this directory.
+3. Run `supabase/migrations/20260705_security_phase1.sql` (blocks role escalation + secures device tables).
 
 ## 3. Configure environment variables
 
